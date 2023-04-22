@@ -1,9 +1,9 @@
 package lrucache
 
 import (
-	"container/list"
 	"errors"
 	"fmt"
+	"tryouts/doublylinkedlist"
 )
 
 type cacheKey int
@@ -14,25 +14,25 @@ type CacheObject struct {
 	value cacheValue
 }
 
-type LruCache struct {
+type LRUCache struct {
 	capacity int
-	list     *list.List
-	elements map[cacheKey]*list.Element
+	list     *doublylinkedlist.List
+	elements map[cacheKey]*doublylinkedlist.Node
 }
 
-func New(capacity int) (*LruCache, error) {
+func New(capacity int) (*LRUCache, error) {
 	if capacity == 0 {
 		return nil, fmt.Errorf("capacity cannot be 0")
 	}
 
-	return &LruCache{
+	return &LRUCache{
 		capacity: capacity,
-		list:     new(list.List),
-		elements: make(map[cacheKey]*list.Element, capacity),
+		list:     &doublylinkedlist.List{},
+		elements: make(map[cacheKey]*doublylinkedlist.Node, capacity),
 	}, nil
 }
 
-func (cache *LruCache) Get(key cacheKey) (cacheValue, error) {
+func (cache *LRUCache) Get(key cacheKey) (cacheValue, error) {
 	elem, ok := cache.elements[key]
 	if !ok {
 		return nil, errors.New("cache key was not found")
@@ -43,50 +43,46 @@ func (cache *LruCache) Get(key cacheKey) (cacheValue, error) {
 	return value, nil
 }
 
-func (cache *LruCache) Put(key cacheKey, value cacheValue) {
+func (cache *LRUCache) Put(key cacheKey, value cacheValue) {
 	elem, ok := cache.elements[key]
+	cacheObj := &CacheObject{
+		key:   key,
+		value: value,
+	}
+
 	if ok {
-		elem.Value = &CacheObject{
-			key:   key,
-			value: value,
-		}
+		elem.Value = cacheObj
 		cache.list.MoveToFront(elem)
 	} else {
-		if cache.list.Len() == cache.capacity {
-			key := cache.list.Back().Value.(*CacheObject).key
+		if cache.list.Length() == cache.capacity {
+			lastNode := cache.list.Back()
+			key := lastNode.Value.(*CacheObject).key
 			delete(cache.elements, key)
-			cache.list.Remove(cache.list.Back())
+			cache.list.Remove(lastNode)
 		}
 
-		cacheObj := &CacheObject{
-			key:   key,
-			value: value,
-		}
-		pointer := cache.list.PushFront(cacheObj)
-		cache.elements[key] = pointer
+		node := &doublylinkedlist.Node{Value: cacheObj}
+		cache.list.PushFront(node)
+		cache.elements[key] = node
 	}
 }
 
-func (cache *LruCache) Purge() {
-	cache.list = new(list.List)
-	cache.elements = make(map[cacheKey]*list.Element, cache.capacity)
+func (cache *LRUCache) Purge() {
+	cache.list = &doublylinkedlist.List{}
+	cache.elements = make(map[cacheKey]*doublylinkedlist.Node, cache.capacity)
 }
 
-func (cache *LruCache) Print() {
-	currentElem := cache.list.Front()
-	if currentElem == nil {
+func (cache *LRUCache) Print() {
+	currentElement := cache.list.Front()
+	if currentElement == nil {
 		fmt.Println("nothing to show")
 		return
 	}
 
-	for {
-		if currentElem.Next() == nil {
-			fmt.Printf("Key: %d, Value: %+v\n", currentElem.Value.(*CacheObject).key, currentElem.Value.(*CacheObject).value)
-			break
-		}
-
-		fmt.Printf("Key: %d, Value: %+v\n", currentElem.Value.(*CacheObject).key, currentElem.Value.(*CacheObject).value)
-		currentElem = currentElem.Next()
+	for currentElement != nil {
+		cacheObject := currentElement.Value.(*CacheObject)
+		fmt.Printf("Key: %d, Value: %+v\n", cacheObject.key, cacheObject.value)
+		currentElement = currentElement.Next
 	}
 
 	fmt.Println()
@@ -101,7 +97,6 @@ func DoWork() {
 
 	fmt.Println(lru.Get(1))
 	fmt.Println(lru.Get(3))
-	lru.Print()
 
 	lru.Put(1, true)
 	lru.Print()
