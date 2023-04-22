@@ -5,6 +5,7 @@ import (
 	"time"
 	"tryouts/designpatterns"
 	"tryouts/linkedlist"
+	"tryouts/lrucache"
 	"tryouts/pipefilter"
 	"tryouts/queue"
 	"tryouts/sorting"
@@ -21,7 +22,7 @@ func generateSlice(size int) []int {
 	return slice
 }
 
-const decision = "pipe_filter"
+const decision = "lru_cache"
 
 func main() {
 	switch decision {
@@ -39,5 +40,7 @@ func main() {
 		statemachine.DoWork()
 	case "pipe_filter":
 		pipefilter.DoWork()
+	case "lru_cache":
+		lrucache.DoWork()
 	}
 }
