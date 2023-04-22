@@ -7,6 +7,7 @@ import (
 	"tryouts/linkedlist"
 	"tryouts/queue"
 	"tryouts/sorting"
+	"tryouts/statemachine"
 	"tryouts/synchronization"
 )
 
@@ -19,7 +20,7 @@ func generateSlice(size int) []int {
 	return slice
 }
 
-const decision = "design_patterns"
+const decision = "state_machine"
 
 func main() {
 	switch decision {
@@ -33,5 +34,7 @@ func main() {
 		queue.DoWork()
 	case "design_patterns":
 		designpatterns.DoWork()
+	case "state_machine":
+		statemachine.DoWork()
 	}
 }
