@@ -5,6 +5,7 @@ import (
 	"time"
 	"tryouts/designpatterns"
 	"tryouts/linkedlist"
+	"tryouts/pipefilter"
 	"tryouts/queue"
 	"tryouts/sorting"
 	"tryouts/statemachine"
@@ -20,7 +21,7 @@ func generateSlice(size int) []int {
 	return slice
 }
 
-const decision = "state_machine"
+const decision = "pipe_filter"
 
 func main() {
 	switch decision {
@@ -36,5 +37,7 @@ func main() {
 		designpatterns.DoWork()
 	case "state_machine":
 		statemachine.DoWork()
+	case "pipe_filter":
+		pipefilter.DoWork()
 	}
 }
