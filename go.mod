@@ -1,4 +1,4 @@
-module tryouts
+module go-concepts
 
 go 1.19
 

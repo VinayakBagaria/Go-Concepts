@@ -3,7 +3,7 @@ package lrucache
 import (
 	"errors"
 	"fmt"
-	"tryouts/doublylinkedlist"
+	"go-concepts/doublylinkedlist"
 )
 
 type cacheKey int

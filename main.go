@@ -1,16 +1,16 @@
 package main
 
 import (
+	"go-concepts/designpatterns"
+	"go-concepts/linkedlist"
+	"go-concepts/lrucache"
+	"go-concepts/pipefilter"
+	"go-concepts/queue"
+	"go-concepts/sorting"
+	"go-concepts/statemachine"
+	"go-concepts/synchronization"
 	"math/rand"
 	"time"
-	"tryouts/designpatterns"
-	"tryouts/linkedlist"
-	"tryouts/lrucache"
-	"tryouts/pipefilter"
-	"tryouts/queue"
-	"tryouts/sorting"
-	"tryouts/statemachine"
-	"tryouts/synchronization"
 )
 
 func generateSlice(size int) []int {
