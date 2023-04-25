@@ -3,6 +3,7 @@ package main
 import (
 	"go-concepts/designpatterns"
 	"go-concepts/linkedlist"
+	"go-concepts/loadbalancer"
 	"go-concepts/lrucache"
 	"go-concepts/pipefilter"
 	"go-concepts/queue"
@@ -22,7 +23,7 @@ func generateSlice(size int) []int {
 	return slice
 }
 
-const decision = "lru_cache"
+const decision = "load_balancer"
 
 func main() {
 	switch decision {
@@ -42,5 +43,7 @@ func main() {
 		pipefilter.DoWork()
 	case "lru_cache":
 		lrucache.DoWork()
+	case "load_balancer":
+		loadbalancer.DoWork()
 	}
 }
