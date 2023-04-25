@@ -5,36 +5,39 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
+	"sync"
+	"sync/atomic"
 )
 
 type server struct {
-	name   string
 	url    string
 	proxy  *httputil.ReverseProxy
 	health bool
+	mux    sync.RWMutex
 }
 
-var (
-	serverList      []*server
-	lastServedIndex int
-)
+type serverPool struct {
+	servers []*server
+	current uint64
+}
 
-func createServers(desiredCount int) {
+func createServers(desiredCount int) []*server {
+	serverList := []*server{}
 	for i := 0; i < desiredCount; i++ {
-		serverName := fmt.Sprintf("server-%d", i)
 		serverUrl := fmt.Sprintf("http://localhost:500%d", i)
-		serverList = append(serverList, newServer(serverName, serverUrl))
+		serverList = append(serverList, newServer(serverUrl))
 	}
+
+	return serverList
 }
 
-func newServer(name, rawURL string) *server {
+func newServer(rawURL string) *server {
 	urlStruct, err := url.Parse(rawURL)
 	if err != nil {
 		panic(err)
 	}
 
 	return &server{
-		name:   name,
 		url:    rawURL,
 		proxy:  httputil.NewSingleHostReverseProxy(urlStruct),
 		health: true,
@@ -44,26 +47,42 @@ func newServer(name, rawURL string) *server {
 func (s *server) checkHealth() {
 	resp, err := http.Head(s.url)
 	if err != nil {
-		s.health = false
+		s.setHealthy(false)
 		return
 	}
 
-	s.health = resp.StatusCode == http.StatusOK
+	s.setHealthy(resp.StatusCode == http.StatusOK)
 }
 
-func getHealthyServer() (*server, error) {
-	for i := 0; i < len(serverList); i++ {
-		s := getServer()
-		if s.health {
-			return s, nil
+func (s *server) isHealthy() bool {
+	s.mux.RLock()
+	defer s.mux.RUnlock()
+	return s.health
+}
+
+func (s *server) setHealthy(health bool) {
+	s.mux.Lock()
+	defer s.mux.Unlock()
+	s.health = health
+}
+
+func (s *serverPool) getNext() *server {
+	nextIndex := s.getNextIndex()
+	l := nextIndex + len(s.servers)
+
+	for i := nextIndex; i < l; i++ {
+		idx := i % len(s.servers)
+		server := s.servers[idx]
+		if server.isHealthy() {
+			atomic.StoreUint64(&s.current, uint64(idx))
+			return server
 		}
 	}
 
-	return nil, fmt.Errorf("no healthy server")
+	return nil
 }
 
-func getServer() *server {
-	s := serverList[lastServedIndex]
-	lastServedIndex = (lastServedIndex + 1) % len(serverList)
-	return s
+func (s *serverPool) getNextIndex() int {
+	nextIndex := atomic.AddUint64(&s.current, uint64(1))
+	return int(nextIndex % uint64(len(s.servers)))
 }

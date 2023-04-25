@@ -9,10 +9,10 @@ import (
 func startHealthCheck() {
 	c := cron.New()
 
-	for _, eachServer := range serverList {
+	for _, eachServer := range pool.servers {
 		func(serverToCheck *server) {
 			c.AddFunc("@every 5s", func() {
-				fmt.Printf("Checking health: %s\n", serverToCheck.name)
+				fmt.Printf("Checking health: %s\n", serverToCheck.url)
 				serverToCheck.checkHealth()
 			})
 		}(eachServer)

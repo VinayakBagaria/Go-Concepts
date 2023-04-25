@@ -6,20 +6,23 @@ import (
 	"net/http"
 )
 
+var pool *serverPool
+
 func forwardRequest(w http.ResponseWriter, r *http.Request) {
-	s, err := getHealthyServer()
-	if err != nil {
-		http.Error(w, "Couldn't process request: "+err.Error(), http.StatusServiceUnavailable)
+	server := pool.getNext()
+	if server == nil {
+		http.Error(w, "Service not available", http.StatusServiceUnavailable)
 		return
 	}
 
 	w.Header().Set("X-Proxy", "golang-proxy")
-	w.Header().Set("X-Origin", s.url)
-	s.proxy.ServeHTTP(w, r)
+	w.Header().Set("X-Origin", server.url)
+	server.proxy.ServeHTTP(w, r)
 }
 
 func DoWork() {
-	createServers(5)
+	serverList := createServers(5)
+	pool = &serverPool{servers: serverList, current: 0}
 	startHealthCheck()
 	http.HandleFunc("/", forwardRequest)
 	fmt.Println("Started server")
