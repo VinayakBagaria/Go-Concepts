@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option go_package = "go-concepts/grpcsystem";
+
+package grpcsystem;
+
+service TodoService {
+    rpc CreateTodo(NewTodo) returns (Todo) {}
+}
+
+message NewTodo {
+    string name = 1;
+    string description = 2;
+    bool done = 3;
+}
+
+message Todo {
+    string name = 1;
+    string description = 2;
+    bool done = 3;
+    string id = 4;
+}
