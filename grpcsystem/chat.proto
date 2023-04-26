@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "go-concepts/grpcsystem";
+
+package grpcsystem;
+
+service ChatService {
+    rpc SayHello(MessageRequest) returns (MessageReply) {}
+}
+
+message MessageRequest {
+    string name = 1;
+}
+
+message MessageReply {
+    string message = 1;
+}

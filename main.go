@@ -2,6 +2,8 @@ package main
 
 import (
 	"go-concepts/designpatterns"
+	"go-concepts/grpcsystem/grpcclient"
+	"go-concepts/grpcsystem/grpcserver"
 	"go-concepts/linkedlist"
 	"go-concepts/loadbalancer"
 	"go-concepts/lrucache"
@@ -23,7 +25,7 @@ func generateSlice(size int) []int {
 	return slice
 }
 
-const decision = "load_balancer"
+const decision = "grpc"
 
 func main() {
 	switch decision {
@@ -45,5 +47,8 @@ func main() {
 		lrucache.DoWork()
 	case "load_balancer":
 		loadbalancer.DoWork()
+	case "grpc":
+		go grpcserver.DoWork()
+		grpcclient.DoWork()
 	}
 }
