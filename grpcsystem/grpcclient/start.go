@@ -1,12 +1,12 @@
 package grpcclient
 
 import (
-	"context"
 	"log"
-	"time"
+	"net/http"
 
 	pb "go-concepts/grpcsystem"
 
+	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
@@ -27,28 +27,23 @@ func DoWork() {
 
 	c := pb.NewTodoServiceClient(conn)
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	defer cancel()
+	r := gin.Default()
 
-	todos := []todoTask{
-		{Name: "Code review", Description: "Review new feature code", Done: false},
-		{Name: "Make YouTube Video", Description: "Start Go for beginners series", Done: false},
-		{Name: "Go to the gym", Description: "Leg day", Done: false},
-		{Name: "Buy groceries", Description: "Buy tomatoes, onions, mangos", Done: false},
-		{Name: "Meet with mentor", Description: "Discuss blockers in my project", Done: false},
-	}
-
-	for _, todo := range todos {
+	r.POST("/task", func(ctx *gin.Context) {
+		var todo todoTask
+		if err := ctx.BindJSON(&todo); err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 		res, err := c.CreateTodo(ctx, &pb.NewTodo{Name: todo.Name, Description: todo.Description, Done: todo.Done})
 		if err != nil {
-			log.Fatalf("could not create todo: %v", err)
+			ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		} else {
+			ctx.JSON(http.StatusOK, gin.H{"id": res.GetId()})
 		}
+	})
 
-		log.Printf(`
-           ID : %s
-           Name : %s
-           Description : %s
-           Done : %v,
-       `, res.GetId(), res.GetName(), res.GetDescription(), res.GetDone())
+	if err := r.Run(":3000"); err != nil {
+		log.Fatalf("Failed to run server: %v", err)
 	}
 }
