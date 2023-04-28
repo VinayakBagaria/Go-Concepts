@@ -11,3 +11,9 @@ run-python-servers:
 generate-proto:
 	protoc --go_out=. --go_opt=paths=source_relative \
     --go-grpc_out=. --go-grpc_opt=paths=source_relative todo.proto
+
+run-consul:
+	docker run -d \
+    -p 8500:8500 \
+    -p 8600:8600/udp \
+    consul agent -server -ui -node=server-1 -bootstrap-expect=1 -client=0.0.0.0
