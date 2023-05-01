@@ -35,7 +35,7 @@ func hasPathBfs(source, dest string) bool {
 	return false
 }
 
-func DoHasPath() {
+func DoHasPathDirected() {
 	fmt.Println("Has Path DFS")
 	fmt.Printf("b/w a & e: %t\n", hasPathDfs("a", "e"))
 	fmt.Printf("b/w a & g: %t\n", hasPathDfs("a", "g"))

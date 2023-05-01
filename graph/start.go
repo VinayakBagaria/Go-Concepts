@@ -7,5 +7,7 @@ func DoWork() {
 	fmt.Println("--------------------------------------")
 	DoTraversal()
 	fmt.Println("--------------------------------------")
-	DoHasPath()
+	DoHasPathDirected()
+	fmt.Println("--------------------------------------")
+	DoHasPathUndirected()
 }
