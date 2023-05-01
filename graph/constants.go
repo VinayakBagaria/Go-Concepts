@@ -8,3 +8,11 @@ var adjacencyList map[string][]string = map[string][]string{
 	"e": {},
 	"f": {},
 }
+
+var edges [][]string = [][]string{
+	{"i", "j"},
+	{"k", "i"},
+	{"m", "k"},
+	{"k", "l"},
+	{"o", "n"},
+}
