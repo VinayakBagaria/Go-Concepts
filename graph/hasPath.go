@@ -1,14 +1,16 @@
 package graph
 
-import "fmt"
+import (
+	"fmt"
+)
 
-func hasPath(source, dest string) bool {
+func hasPathDfs(source, dest string) bool {
 	if source == dest {
 		return true
 	}
 
 	for _, neighbour := range adjacencyList[source] {
-		if hasPath(neighbour, dest) {
+		if hasPathDfs(neighbour, dest) {
 			return true
 		}
 	}
@@ -16,8 +18,29 @@ func hasPath(source, dest string) bool {
 	return false
 }
 
+func hasPathBfs(source, dest string) bool {
+	queue := []string{source}
+
+	for len(queue) > 0 {
+		popped := queue[0]
+		queue = queue[1:]
+
+		if popped == dest {
+			return true
+		}
+
+		queue = append(queue, adjacencyList[popped]...)
+	}
+
+	return false
+}
+
 func DoHasPath() {
-	fmt.Println("Has Path")
-	fmt.Printf("b/w a & e: %t\n", hasPath("a", "e"))
-	fmt.Printf("b/w a & g: %t\n", hasPath("a", "g"))
+	fmt.Println("Has Path DFS")
+	fmt.Printf("b/w a & e: %t\n", hasPathDfs("a", "e"))
+	fmt.Printf("b/w a & g: %t\n", hasPathDfs("a", "g"))
+	fmt.Println("-----")
+	fmt.Println("Has Path BFS")
+	fmt.Printf("b/w a & e: %t\n", hasPathBfs("a", "e"))
+	fmt.Printf("b/w a & g: %t\n", hasPathBfs("a", "g"))
 }

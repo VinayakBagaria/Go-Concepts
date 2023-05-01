@@ -32,18 +32,18 @@ func bfs(source string) {
 		queue = queue[1:]
 		fmt.Printf("%s -> ", popped)
 
-		for _, neighbour := range adjacencyList[popped] {
-			queue = append(queue, neighbour)
-		}
+		queue = append(queue, adjacencyList[popped]...)
 	}
 }
 
 func DoTraversal() {
 	fmt.Println("DFS Loop")
 	dfsLoop("a")
-	fmt.Println("\nDFS Recursive")
+	fmt.Println("\n-----")
+	fmt.Println("DFS Recursive")
 	dfsRecursive("a")
-	fmt.Println("\nBFS")
+	fmt.Println("\n-----")
+	fmt.Println("BFS")
 	bfs("a")
 	fmt.Println()
 }
