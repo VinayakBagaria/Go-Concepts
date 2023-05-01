@@ -3,6 +3,7 @@ package main
 import (
 	"go-concepts/consul"
 	"go-concepts/designpatterns"
+	"go-concepts/graph"
 	"go-concepts/grpcsystem/grpcclient"
 	"go-concepts/grpcsystem/grpcserver"
 	"go-concepts/linkedlist"
@@ -26,7 +27,7 @@ func generateSlice(size int) []int {
 	return slice
 }
 
-const decision = "consul"
+const decision = "graph"
 
 func main() {
 	switch decision {
@@ -53,5 +54,7 @@ func main() {
 		grpcclient.DoWork()
 	case "consul":
 		consul.DoWork()
+	case "graph":
+		graph.DoWork()
 	}
 }
