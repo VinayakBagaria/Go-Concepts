@@ -15,4 +15,6 @@ func DoWork() {
 	DoHasPathUndirected()
 	fmt.Println(separator)
 	DoConnectedComponents()
+	fmt.Println(separator)
+	DoLargestComponentCount()
 }
