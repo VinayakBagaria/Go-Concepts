@@ -12,9 +12,7 @@ func dfsLoop(source string) {
 		stack = stack[:len(stack)-1]
 		fmt.Printf("%s -> ", popped)
 
-		for _, neighbour := range adjacencyList[popped] {
-			stack = append(stack, neighbour)
-		}
+		stack = append(stack, adjacencyList[popped]...)
 	}
 }
 
@@ -47,9 +45,8 @@ func bfsRecursive(queue []string) {
 	queue = queue[1:]
 	fmt.Printf("%s -> ", popped)
 
-	for _, neighbour := range adjacencyList[popped] {
-		queue = append(queue, neighbour)
-	}
+	queue = append(queue, adjacencyList[popped]...)
+	
 	bfsRecursive(queue)
 }
 
