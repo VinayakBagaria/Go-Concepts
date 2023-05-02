@@ -1,6 +1,8 @@
 package graph
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func dfsLoop(source string) {
 	stack := []string{source}
@@ -24,7 +26,7 @@ func dfsRecursive(source string) {
 	}
 }
 
-func bfs(source string) {
+func bfsLoop(source string) {
 	queue := []string{source}
 
 	for len(queue) > 0 {
@@ -36,6 +38,21 @@ func bfs(source string) {
 	}
 }
 
+func bfsRecursive(queue []string) {
+	if len(queue) == 0 {
+		return
+	}
+
+	popped := queue[0]
+	queue = queue[1:]
+	fmt.Printf("%s -> ", popped)
+
+	for _, neighbour := range adjacencyList[popped] {
+		queue = append(queue, neighbour)
+	}
+	bfsRecursive(queue)
+}
+
 func DoTraversal() {
 	fmt.Println("DFS Loop")
 	dfsLoop("a")
@@ -43,7 +60,10 @@ func DoTraversal() {
 	fmt.Println("DFS Recursive")
 	dfsRecursive("a")
 	fmt.Println("\n-----")
-	fmt.Println("BFS")
-	bfs("a")
+	fmt.Println("BFS Loop")
+	bfsLoop("a")
+	fmt.Println("\n-----")
+	fmt.Println("BFS Recursive")
+	bfsRecursive([]string{"a"})
 	fmt.Println()
 }
