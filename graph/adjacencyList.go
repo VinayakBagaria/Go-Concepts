@@ -1,6 +1,6 @@
 package graph
 
-func MakeAdjacencyList() map[string][]string {
+func MakeAdjacencyList(edges [][]string) map[string][]string {
 	graph := make(map[string][]string)
 
 	for _, edge := range edges {

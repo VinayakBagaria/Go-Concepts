@@ -6,7 +6,7 @@ const separator = "--------------------------------------"
 
 func DoWork() {
 	fmt.Println("Edge array => Adjancency List")
-	fmt.Println(MakeAdjacencyList())
+	fmt.Println(MakeAdjacencyList(edges))
 	fmt.Println(separator)
 	DoTraversal()
 	fmt.Println(separator)
@@ -17,4 +17,6 @@ func DoWork() {
 	DoConnectedComponents()
 	fmt.Println(separator)
 	DoLargestComponentCount()
+	fmt.Println(separator)
+	DoShortestPathDistance()
 }

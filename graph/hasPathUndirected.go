@@ -25,7 +25,7 @@ func hasPath(graph map[string][]string, source, dest string, visited visitedType
 }
 
 func DoHasPathUndirected() {
-	graph := MakeAdjacencyList()
+	graph := MakeAdjacencyList(edges)
 	fmt.Println("Has Path in Undirected Graph DFS")
 	fmt.Printf("b/w i & k: %t\n", hasPath(graph, "i", "k", visitedType{}))
 
