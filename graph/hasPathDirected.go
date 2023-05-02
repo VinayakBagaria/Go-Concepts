@@ -36,11 +36,11 @@ func hasPathBfs(source, dest string) bool {
 }
 
 func DoHasPathDirected() {
-	fmt.Println("Has Path DFS")
+	fmt.Println("Has Path in Directed Graph DFS")
 	fmt.Printf("b/w a & e: %t\n", hasPathDfs("a", "e"))
 	fmt.Printf("b/w a & g: %t\n", hasPathDfs("a", "g"))
 	fmt.Println("-----")
-	fmt.Println("Has Path BFS")
+	fmt.Println("Has Path in Directed Graph BFS")
 	fmt.Printf("b/w a & e: %t\n", hasPathBfs("a", "e"))
 	fmt.Printf("b/w a & g: %t\n", hasPathBfs("a", "g"))
 }

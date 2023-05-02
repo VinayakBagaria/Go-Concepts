@@ -5,7 +5,6 @@ import "fmt"
 type visitedType map[string]bool
 
 func hasPath(graph map[string][]string, source, dest string, visited visitedType) bool {
-
 	if source == dest {
 		return true
 	}
@@ -27,7 +26,7 @@ func hasPath(graph map[string][]string, source, dest string, visited visitedType
 
 func DoHasPathUndirected() {
 	graph := MakeAdjacencyList()
-	fmt.Println("Has Path DFS")
+	fmt.Println("Has Path in Undirected Graph DFS")
 	fmt.Printf("b/w i & k: %t\n", hasPath(graph, "i", "k", visitedType{}))
 
 }

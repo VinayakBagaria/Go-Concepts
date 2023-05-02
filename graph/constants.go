@@ -1,6 +1,6 @@
 package graph
 
-var adjacencyList map[string][]string = map[string][]string{
+var adjacencyList = map[string][]string{
 	"a": {"b", "c"},
 	"b": {"d"},
 	"c": {"e"},
@@ -9,7 +9,7 @@ var adjacencyList map[string][]string = map[string][]string{
 	"f": {},
 }
 
-var edges [][]string = [][]string{
+var edges = [][]string{
 	{"i", "j"},
 	{"k", "i"},
 	{"m", "k"},
