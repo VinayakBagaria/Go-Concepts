@@ -19,4 +19,6 @@ func DoWork() {
 	DoLargestComponentCount()
 	fmt.Println(separator)
 	DoShortestPathDistance()
+	fmt.Println(separator)
+	DoDistinctIslandCount()
 }

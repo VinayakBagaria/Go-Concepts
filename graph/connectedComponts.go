@@ -27,6 +27,7 @@ func DoConnectedComponents() {
 		"3": {"2", "4"},
 		"4": {"3", "2"},
 	}
+
 	visited := map[string]bool{}
 	counter := 0
 	headOfGraphs := []string{}
