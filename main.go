@@ -6,6 +6,7 @@ import (
 	"go-concepts/graph"
 	"go-concepts/grpcsystem/grpcclient"
 	"go-concepts/grpcsystem/grpcserver"
+	"go-concepts/heap"
 	"go-concepts/linkedlist"
 	"go-concepts/loadbalancer"
 	"go-concepts/lrucache"
@@ -27,7 +28,7 @@ func generateSlice(size int) []int {
 	return slice
 }
 
-const decision = "graph"
+const decision = "heap"
 
 func main() {
 	switch decision {
@@ -56,5 +57,7 @@ func main() {
 		consul.DoWork()
 	case "graph":
 		graph.DoWork()
+	case "heap":
+		heap.DoWork()
 	}
 }
