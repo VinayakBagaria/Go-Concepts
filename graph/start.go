@@ -24,5 +24,7 @@ func DoWork() {
 	fmt.Println(separator)
 	DoHasCycleDirected()
 	fmt.Println(separator)
+	DoHasCycleUndirected()
+	fmt.Println(separator)
 	DoTopologicalSort()
 }
