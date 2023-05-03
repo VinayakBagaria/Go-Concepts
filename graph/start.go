@@ -21,4 +21,6 @@ func DoWork() {
 	DoShortestPathDistance()
 	fmt.Println(separator)
 	DoDistinctIslandCount()
+	fmt.Println(separator)
+	DoHasCycleDirected()
 }
