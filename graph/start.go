@@ -23,4 +23,6 @@ func DoWork() {
 	DoDistinctIslandCount()
 	fmt.Println(separator)
 	DoHasCycleDirected()
+	fmt.Println(separator)
+	DoTopologicalSort()
 }
