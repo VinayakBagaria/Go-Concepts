@@ -1,6 +1,7 @@
 package main
 
 import (
+	"go-concepts/bloomfilters"
 	"go-concepts/consul"
 	"go-concepts/designpatterns"
 	"go-concepts/graph"
@@ -28,7 +29,7 @@ func generateSlice(size int) []int {
 	return slice
 }
 
-const decision = "heap"
+const decision = "bloom_filters"
 
 func main() {
 	switch decision {
@@ -59,5 +60,7 @@ func main() {
 		graph.DoWork()
 	case "heap":
 		heap.DoWork()
+	case "bloom_filters":
+		bloomfilters.DoWork()
 	}
 }
