@@ -11,6 +11,7 @@ import (
 	"go-concepts/linkedlist"
 	"go-concepts/loadbalancer"
 	"go-concepts/lrucache"
+	"go-concepts/mediumremover"
 	"go-concepts/pipefilter"
 	"go-concepts/queue"
 	"go-concepts/sorting"
@@ -29,7 +30,7 @@ func generateSlice(size int) []int {
 	return slice
 }
 
-const decision = "bloom_filters"
+const decision = "medium_remover"
 
 func main() {
 	switch decision {
@@ -62,5 +63,7 @@ func main() {
 		heap.DoWork()
 	case "bloom_filters":
 		bloomfilters.DoWork()
+	case "medium_remover":
+		mediumremover.DoWork()
 	}
 }
