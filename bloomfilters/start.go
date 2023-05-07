@@ -8,14 +8,14 @@ import (
 
 type hashFunction func(element string) int
 
-func hash32Bit(element string) int {
+var hash32Bit hashFunction = func(element string) int {
 	h := fnv.New32a()
 	h.Write([]byte(element))
 	floatedHash := float64(h.Sum32())
 	return int(math.Abs(floatedHash))
 }
 
-func hash64Bit(element string) int {
+var hash64Bit hashFunction = func(element string) int {
 	h := fnv.New64a()
 	h.Write([]byte(element))
 	floatedHash := float64(h.Sum64())
