@@ -1,6 +1,7 @@
 package main
 
 import (
+	"go-concepts/arrays"
 	"go-concepts/bloomfilters"
 	"go-concepts/consul"
 	"go-concepts/designpatterns"
@@ -30,7 +31,7 @@ func generateSlice(size int) []int {
 	return slice
 }
 
-const decision = "graph"
+const decision = "arrays"
 
 func main() {
 	switch decision {
@@ -65,5 +66,7 @@ func main() {
 		bloomfilters.DoWork()
 	case "medium_remover":
 		mediumremover.DoWork()
+	case "arrays":
+		arrays.DoWork()
 	}
 }
