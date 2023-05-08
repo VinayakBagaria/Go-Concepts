@@ -10,11 +10,7 @@ type QueueElement struct {
 
 func copyFromOneArrayToAnother(source []int) []int {
 	var destination []int
-
-	for _, element := range source {
-		destination = append(destination, element)
-	}
-
+	destination = append(destination, source...)
 	return destination
 }
 
@@ -33,12 +29,13 @@ func approach1(nums []int) int {
 	for index, number := range nums {
 		sequence := []int{number}
 		queue = append(queue, QueueElement{sequence: sequence, index: index})
-		longest = max(longest, len(sequence))
 	}
 
 	for len(queue) > 0 {
 		node := queue[0]
 		queue = queue[1:]
+
+		longest = max(longest, len(node.sequence))
 
 		lastElement := node.sequence[len(node.sequence)-1]
 		index := node.index
@@ -48,7 +45,6 @@ func approach1(nums []int) int {
 				newSequence := copyFromOneArrayToAnother(node.sequence)
 				newSequence = append(newSequence, nums[i])
 				queue = append(queue, QueueElement{sequence: newSequence, index: i})
-				longest = max(longest, len(newSequence))
 			}
 		}
 	}
@@ -65,6 +61,7 @@ func maxOfArray(nums []int) int {
 }
 
 func lengthOfLIS(nums []int) int {
+	// https://www.youtube.com/watch?v=U9_9JmzeaUY
 	lis := make([]int, len(nums))
 	for i := range lis {
 		lis[i] = 1
@@ -81,6 +78,25 @@ func lengthOfLIS(nums []int) int {
 	return maxOfArray(lis)
 }
 
+func lengthOfLISDp(nums []int) int {
+	// https://www.youtube.com/watch?v=odrfUCS9sQk
+	dp := make([]int, len(nums))
+	dp[0] = 1
+
+	for i, num := range nums {
+		maximum := 0
+		for j := 0; j < i; j++ {
+			if nums[j] < num {
+				maximum = max(maximum, dp[j])
+			}
+		}
+
+		dp[i] = maximum + 1
+	}
+
+	return maxOfArray(dp)
+}
+
 func DoLongestIncreasingSubsequence() {
 	inputs := [][]int{
 		{1, 2, 4, 3},
@@ -89,6 +105,6 @@ func DoLongestIncreasingSubsequence() {
 
 	for _, input := range inputs {
 		fmt.Printf("Input: %v\n", input)
-		fmt.Printf("Naive: %d, Fast: %d\n", approach1(input), lengthOfLIS(input))
+		fmt.Printf("Naive: %d, Fast: %d; DP: %d\n", approach1(input), lengthOfLIS(input), lengthOfLISDp(input))
 	}
 }
