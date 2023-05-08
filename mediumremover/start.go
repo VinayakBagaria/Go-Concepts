@@ -48,7 +48,9 @@ func getTitle(htmlBody string) string {
 }
 
 func writeToFile(filePrefix string, contents string) string {
-	fileName := fmt.Sprintf("%s.html", strings.Replace(filePrefix, " ", "-", -1))
+	stripped := regexp.MustCompile(`[^a-zA-Z0-9 ]+`).ReplaceAllString(filePrefix, "")
+	fileName := fmt.Sprintf("mediumremover/%s.html", strings.Replace(stripped, " ", "-", -1))
+
 	f, err := os.Create(fileName)
 	if err != nil {
 		log.Fatalf("cant create file: %v", err)
