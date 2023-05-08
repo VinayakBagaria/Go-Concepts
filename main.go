@@ -4,6 +4,7 @@ import (
 	"go-concepts/bloomfilters"
 	"go-concepts/consul"
 	"go-concepts/designpatterns"
+	"go-concepts/dp"
 	"go-concepts/graph"
 	"go-concepts/grpcsystem/grpcclient"
 	"go-concepts/grpcsystem/grpcserver"
@@ -31,7 +32,7 @@ func generateSlice(size int) []int {
 	return slice
 }
 
-const decision = "random"
+const decision = "dynamic_programming"
 
 func main() {
 	switch decision {
@@ -68,5 +69,7 @@ func main() {
 		mediumremover.DoWork()
 	case "random":
 		random.DoWork()
+	case "dynamic_programming":
+		dp.DoWork()
 	}
 }
