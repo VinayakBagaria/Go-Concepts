@@ -27,4 +27,6 @@ func DoWork() {
 	DoHasCycleUndirected()
 	fmt.Println(separator)
 	DoTopologicalSort()
+	fmt.Println(separator)
+	DoWordLadder()
 }

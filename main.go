@@ -30,7 +30,7 @@ func generateSlice(size int) []int {
 	return slice
 }
 
-const decision = "medium_remover"
+const decision = "graph"
 
 func main() {
 	switch decision {
