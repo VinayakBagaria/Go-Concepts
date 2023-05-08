@@ -1,7 +1,6 @@
 package main
 
 import (
-	"go-concepts/arrays"
 	"go-concepts/bloomfilters"
 	"go-concepts/consul"
 	"go-concepts/designpatterns"
@@ -15,6 +14,7 @@ import (
 	"go-concepts/mediumremover"
 	"go-concepts/pipefilter"
 	"go-concepts/queue"
+	"go-concepts/random"
 	"go-concepts/sorting"
 	"go-concepts/statemachine"
 	"go-concepts/synchronization"
@@ -31,7 +31,7 @@ func generateSlice(size int) []int {
 	return slice
 }
 
-const decision = "arrays"
+const decision = "random"
 
 func main() {
 	switch decision {
@@ -66,7 +66,7 @@ func main() {
 		bloomfilters.DoWork()
 	case "medium_remover":
 		mediumremover.DoWork()
-	case "arrays":
-		arrays.DoWork()
+	case "random":
+		random.DoWork()
 	}
 }

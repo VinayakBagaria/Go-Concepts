@@ -1,5 +1,5 @@
 // https://leetcode.com/problems/product-of-array-except-self/
-package arrays
+package random
 
 import "fmt"
 
@@ -31,7 +31,7 @@ func DoProductOfArrayExceptSelf() {
 	inputs = append(inputs, []int{1, 2, 3, 4})
 	inputs = append(inputs, []int{-1, 1, 0, -3, 3})
 
-	fmt.Println("DoProductOfArrayExceptSelf")
+	fmt.Println("Product of Array Except Self")
 
 	for _, input := range inputs {
 		fmt.Printf("Input: %v, Output: %v\n", input, productExceptSelf(input))
