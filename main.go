@@ -13,6 +13,7 @@ import (
 	"go-concepts/loadbalancer"
 	"go-concepts/lrucache"
 	"go-concepts/mediumremover"
+	"go-concepts/optionpattern"
 	"go-concepts/pipefilter"
 	"go-concepts/queue"
 	"go-concepts/random"
@@ -32,7 +33,7 @@ func generateSlice(size int) []int {
 	return slice
 }
 
-const decision = "dynamic_programming"
+const decision = "option_pattern"
 
 func main() {
 	switch decision {
@@ -71,5 +72,7 @@ func main() {
 		random.DoWork()
 	case "dynamic_programming":
 		dp.DoWork()
+	case "option_pattern":
+		optionpattern.DoWork()
 	}
 }
