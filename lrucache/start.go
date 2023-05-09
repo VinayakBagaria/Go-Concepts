@@ -3,7 +3,8 @@ package lrucache
 import (
 	"errors"
 	"fmt"
-	"go-concepts/doublylinkedlist"
+
+	doublylinkedlist "container/list"
 )
 
 type cacheKey int
@@ -17,7 +18,7 @@ type CacheObject struct {
 type LRUCache struct {
 	capacity int
 	list     *doublylinkedlist.List
-	elements map[cacheKey]*doublylinkedlist.Node
+	elements map[cacheKey]*doublylinkedlist.Element
 }
 
 func New(capacity int) (*LRUCache, error) {
@@ -27,8 +28,8 @@ func New(capacity int) (*LRUCache, error) {
 
 	return &LRUCache{
 		capacity: capacity,
-		list:     &doublylinkedlist.List{},
-		elements: make(map[cacheKey]*doublylinkedlist.Node, capacity),
+		list:     doublylinkedlist.New(),
+		elements: make(map[cacheKey]*doublylinkedlist.Element, capacity),
 	}, nil
 }
 
@@ -38,14 +39,14 @@ func (cache *LRUCache) Get(key cacheKey) (cacheValue, error) {
 		return nil, errors.New("cache key was not found")
 	}
 
-	value := elem.Value.(*CacheObject).value
 	cache.list.MoveToFront(elem)
+	value := elem.Value.(CacheObject).value
 	return value, nil
 }
 
 func (cache *LRUCache) Put(key cacheKey, value cacheValue) {
 	elem, ok := cache.elements[key]
-	cacheObj := &CacheObject{
+	cacheObj := CacheObject{
 		key:   key,
 		value: value,
 	}
@@ -54,22 +55,21 @@ func (cache *LRUCache) Put(key cacheKey, value cacheValue) {
 		elem.Value = cacheObj
 		cache.list.MoveToFront(elem)
 	} else {
-		if cache.list.Length() == cache.capacity {
+		if cache.list.Len() == cache.capacity {
 			lastNode := cache.list.Back()
-			key := lastNode.Value.(*CacheObject).key
+			key := lastNode.Value.(CacheObject).key
 			delete(cache.elements, key)
 			cache.list.Remove(lastNode)
 		}
 
-		node := &doublylinkedlist.Node{Value: cacheObj}
-		cache.list.PushFront(node)
-		cache.elements[key] = node
+		element := cache.list.PushFront(cacheObj)
+		cache.elements[key] = element
 	}
 }
 
 func (cache *LRUCache) Purge() {
-	cache.list = &doublylinkedlist.List{}
-	cache.elements = make(map[cacheKey]*doublylinkedlist.Node, cache.capacity)
+	cache.list = doublylinkedlist.New()
+	cache.elements = make(map[cacheKey]*doublylinkedlist.Element, cache.capacity)
 }
 
 func (cache *LRUCache) Print() {
@@ -80,9 +80,9 @@ func (cache *LRUCache) Print() {
 	}
 
 	for currentElement != nil {
-		cacheObject := currentElement.Value.(*CacheObject)
+		cacheObject := currentElement.Value.(CacheObject)
 		fmt.Printf("Key: %d, Value: %+v\n", cacheObject.key, cacheObject.value)
-		currentElement = currentElement.Next
+		currentElement = currentElement.Next()
 	}
 
 	fmt.Println()
@@ -97,12 +97,14 @@ func DoWork() {
 
 	fmt.Println(lru.Get(1))
 	fmt.Println(lru.Get(3))
+	fmt.Println()
 
 	lru.Put(1, true)
 	lru.Print()
 
 	lru.Purge()
 	lru.Print()
+	fmt.Println()
 
 	lru.Put(1, "back")
 	lru.Put(2, 2)
