@@ -9,14 +9,14 @@ import (
 	"go-concepts/loadbalancer"
 	"go-concepts/lrucache"
 	"go-concepts/mediumremover"
+	"go-concepts/middleware"
 	"go-concepts/optionpattern"
 	"go-concepts/pipefilter"
 	"go-concepts/statemachine"
 	"go-concepts/synchronization"
 )
 
-
-const decision = "lru_cache"
+const decision = "middleware"
 
 func main() {
 	switch decision {
@@ -43,5 +43,7 @@ func main() {
 		mediumremover.DoWork()
 	case "option_pattern":
 		optionpattern.DoWork()
+	case "middleware":
+		middleware.DoWork()
 	}
 }
