@@ -14,9 +14,10 @@ import (
 	"go-concepts/pipefilter"
 	"go-concepts/statemachine"
 	"go-concepts/synchronization"
+	"go-concepts/tokenbucket"
 )
 
-const decision = "middleware"
+const decision = "token_bucket"
 
 func main() {
 	switch decision {
@@ -45,5 +46,7 @@ func main() {
 		optionpattern.DoWork()
 	case "middleware":
 		middleware.DoWork()
+	case "token_bucket":
+		tokenbucket.DoWork()
 	}
 }
