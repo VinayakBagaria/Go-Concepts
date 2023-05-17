@@ -3,6 +3,7 @@ package main
 import (
 	"go-concepts/bloomfilters"
 	"go-concepts/consul"
+	"go-concepts/contextual"
 	"go-concepts/designpatterns"
 	"go-concepts/grpcsystem/grpcclient"
 	"go-concepts/grpcsystem/grpcserver"
@@ -17,7 +18,7 @@ import (
 	"go-concepts/tokenbucket"
 )
 
-const decision = "token_bucket"
+const decision = "context"
 
 func main() {
 	switch decision {
@@ -48,5 +49,7 @@ func main() {
 		middleware.DoWork()
 	case "token_bucket":
 		tokenbucket.DoWork()
+	case "context":
+		contextual.DoWork()
 	}
 }
