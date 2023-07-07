@@ -7,6 +7,7 @@ import (
 	"go-concepts/designpatterns"
 	"go-concepts/grpcsystem/grpcclient"
 	"go-concepts/grpcsystem/grpcserver"
+	"go-concepts/internals"
 	"go-concepts/loadbalancer"
 	"go-concepts/lrucache"
 	"go-concepts/mediumremover"
@@ -18,7 +19,7 @@ import (
 	"go-concepts/tokenbucket"
 )
 
-const decision = "context"
+const decision = "internals"
 
 func main() {
 	switch decision {
@@ -51,5 +52,7 @@ func main() {
 		tokenbucket.DoWork()
 	case "context":
 		contextual.DoWork()
+	case "internals":
+		internals.DoWork()
 	}
 }
