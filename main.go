@@ -14,12 +14,13 @@ import (
 	"go-concepts/middleware"
 	"go-concepts/optionpattern"
 	"go-concepts/pipefilter"
+	"go-concepts/signals"
 	"go-concepts/statemachine"
 	"go-concepts/synchronization"
 	"go-concepts/tokenbucket"
 )
 
-const decision = "internals"
+const decision = "signals"
 
 func main() {
 	switch decision {
@@ -54,5 +55,7 @@ func main() {
 		contextual.DoWork()
 	case "internals":
 		internals.DoWork()
+	case "signals":
+		signals.DoWork()
 	}
 }
