@@ -10,6 +10,7 @@ import (
 	"go-concepts/internals"
 	"go-concepts/loadbalancer"
 	"go-concepts/lrucache"
+	"go-concepts/mapwithexpiration"
 	"go-concepts/mediumremover"
 	"go-concepts/middleware"
 	"go-concepts/optionpattern"
@@ -20,7 +21,7 @@ import (
 	"go-concepts/tokenbucket"
 )
 
-const decision = "signals"
+const decision = "mapwithexpiration"
 
 func main() {
 	switch decision {
@@ -57,5 +58,7 @@ func main() {
 		internals.DoWork()
 	case "signals":
 		signals.DoWork()
+	case "mapwithexpiration":
+		mapwithexpiration.DoWork()
 	}
 }
