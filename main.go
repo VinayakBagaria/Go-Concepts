@@ -18,10 +18,11 @@ import (
 	"go-concepts/signals"
 	"go-concepts/statemachine"
 	"go-concepts/synchronization"
+	"go-concepts/threadpool"
 	"go-concepts/tokenbucket"
 )
 
-const decision = "mapwithexpiration"
+const decision = "threadpool"
 
 func main() {
 	switch decision {
@@ -60,5 +61,7 @@ func main() {
 		signals.DoWork()
 	case "mapwithexpiration":
 		mapwithexpiration.DoWork()
+	case "threadpool":
+		threadpool.DoWork()
 	}
 }
