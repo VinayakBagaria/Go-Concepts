@@ -5,6 +5,7 @@ import (
 	"go-concepts/consul"
 	"go-concepts/contextual"
 	"go-concepts/designpatterns"
+	"go-concepts/fanin"
 	"go-concepts/grpcsystem/grpcclient"
 	"go-concepts/grpcsystem/grpcserver"
 	"go-concepts/internals"
@@ -23,7 +24,7 @@ import (
 	"go-concepts/workers"
 )
 
-const decision = "workers"
+const decision = "fanIn"
 
 func main() {
 	switch decision {
@@ -66,5 +67,7 @@ func main() {
 		threadpool.DoWork()
 	case "workers":
 		workers.DoWork()
+	case "fanIn":
+		fanin.DoWork()
 	}
 }
