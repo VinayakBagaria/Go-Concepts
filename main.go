@@ -21,10 +21,11 @@ import (
 	"go-concepts/synchronization"
 	"go-concepts/threadpool"
 	"go-concepts/tokenbucket"
+	"go-concepts/tree"
 	"go-concepts/workers"
 )
 
-const decision = "fanIn"
+const decision = "tree"
 
 func main() {
 	switch decision {
@@ -69,5 +70,7 @@ func main() {
 		workers.DoWork()
 	case "fanIn":
 		fanin.DoWork()
+	case "tree":
+		tree.DoWork()
 	}
 }
