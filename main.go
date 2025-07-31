@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"go-concepts/bloomfilters"
 	"go-concepts/consul"
 	"go-concepts/contextual"
@@ -23,54 +24,49 @@ import (
 	"go-concepts/tokenbucket"
 	"go-concepts/tree"
 	"go-concepts/workers"
+	"os"
+	"strings"
 )
 
-const decision = "tree"
-
 func main() {
-	switch decision {
-	case "synchronization":
-		synchronization.DoWork()
-	case "design_patterns":
-		designpatterns.DoWork()
-	case "state_machine":
-		statemachine.DoWork()
-	case "pipe_filter":
-		pipefilter.DoWork()
-	case "lru_cache":
-		lrucache.DoWork()
-	case "load_balancer":
-		loadbalancer.DoWork()
-	case "grpc":
-		go grpcserver.DoWork()
-		grpcclient.DoWork()
-	case "consul":
-		consul.DoWork()
-	case "bloom_filters":
-		bloomfilters.DoWork()
-	case "medium_remover":
-		mediumremover.DoWork()
-	case "option_pattern":
-		optionpattern.DoWork()
-	case "middleware":
-		middleware.DoWork()
-	case "token_bucket":
-		tokenbucket.DoWork()
-	case "context":
-		contextual.DoWork()
-	case "internals":
-		internals.DoWork()
-	case "signals":
-		signals.DoWork()
-	case "mapwithexpiration":
-		mapwithexpiration.DoWork()
-	case "threadpool":
-		threadpool.DoWork()
-	case "workers":
-		workers.DoWork()
-	case "fanIn":
-		fanin.DoWork()
-	case "tree":
-		tree.DoWork()
+	concepts := map[string]func(){
+		"synchronization": synchronization.DoWork,
+		"design_patterns": designpatterns.DoWork,
+		"state_machine":   statemachine.DoWork,
+		"pipe_filter":     pipefilter.DoWork,
+		"lru_cache":       lrucache.DoWork,
+		"load_balancer":   loadbalancer.DoWork,
+		"grpc": func() {
+			go grpcserver.DoWork()
+			grpcclient.DoWork()
+		},
+		"consul":            consul.DoWork,
+		"bloom_filters":     bloomfilters.DoWork,
+		"medium_remover":    mediumremover.DoWork,
+		"option_pattern":    optionpattern.DoWork,
+		"middleware":        middleware.DoWork,
+		"token_bucket":      tokenbucket.DoWork,
+		"context":           contextual.DoWork,
+		"internals":         internals.DoWork,
+		"signals":           signals.DoWork,
+		"mapwithexpiration": mapwithexpiration.DoWork,
+		"threadpool":        threadpool.DoWork,
+		"workers":           workers.DoWork,
+		"fanIn":             fanin.DoWork,
+		"tree":              tree.DoWork,
 	}
+
+	var conceptNames []string
+	for conceptName := range concepts {
+		conceptNames = append(conceptNames, conceptName)
+	}
+
+	if len(os.Args) == 1 {
+		fmt.Println("Choose a concept:")
+		fmt.Println(strings.Join(conceptNames, ", "))
+		return
+	}
+
+	decision := os.Args[1]
+	concepts[decision]()
 }

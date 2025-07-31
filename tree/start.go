@@ -8,8 +8,8 @@ import (
 
 func DoWork() {
 	path := "."
-	if len(os.Args) > 1 {
-		path = os.Args[1]
+	if len(os.Args) > 2 {
+		path = os.Args[2]
 	}
 
 	err := tree(path, "")
