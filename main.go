@@ -18,6 +18,7 @@ import (
 	"go-concepts/optionpattern"
 	"go-concepts/pipefilter"
 	"go-concepts/signals"
+	"go-concepts/socket"
 	"go-concepts/statemachine"
 	"go-concepts/synchronization"
 	"go-concepts/threadpool"
@@ -54,6 +55,7 @@ func main() {
 		"workers":           workers.DoWork,
 		"fanIn":             fanin.DoWork,
 		"tree":              tree.DoWork,
+		"socket":            socket.DoWork,
 	}
 
 	var conceptNames []string
