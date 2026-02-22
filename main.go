@@ -9,6 +9,7 @@ import (
 	"go-concepts/fanin"
 	"go-concepts/grpcsystem/grpcclient"
 	"go-concepts/grpcsystem/grpcserver"
+	"go-concepts/httpsocket"
 	"go-concepts/internals"
 	"go-concepts/loadbalancer"
 	"go-concepts/lrucache"
@@ -56,6 +57,7 @@ func main() {
 		"fanIn":             fanin.DoWork,
 		"tree":              tree.DoWork,
 		"socket":            socket.DoWork,
+		"http_socket":       httpsocket.DoWork,
 	}
 
 	var conceptNames []string
